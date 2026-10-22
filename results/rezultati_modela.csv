@@ -1,0 +1,5 @@
+Model,Accuracy,Weighted F1,Macro F1,Precision (poginuli),Recall (poginuli),F1 (poginuli)
+Logisticka regresija,0.6421,0.6869,0.48,0.04,0.4239,0.07
+Decision Tree,0.6672,0.6917,0.48,0.03,0.1957,0.06
+Random Forest,0.7262,0.7317,0.51,0.06,0.1087,0.08
+CatBoost,0.7375,0.7400,0.53,0.10,0.1304,0.11
