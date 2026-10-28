@@ -1,9 +1,9 @@
-# Podaci
+# Data
 
-Podaci nisu uključeni u repozitorij. Preuzmi ih sa Nacionalnog portala otvorenih podataka:
+The data are not included in the repository. Download them from the National Open Data Portal:
 
-**Ministarstvo unutrašnjih poslova Republike Srbije: Podaci o saobraćajnim nezgodama po policijskim upravama i opštinama za 2025. godinu**
+**Ministry of Interior of the Republic of Serbia: Data on traffic accidents by police departments and municipalities for 2025**
 https://data.gov.rs/sr/datasets/podatsi-o-saobratshajnim-nezgodama-po-politsijskim-upravama-i-opshtinama/
 
-Fajl korišćen u radu: `nez-opendata-2025-20260125.xlsx` (33.415 redova, 9 kolona, bez zaglavlja).
-Stavi ga u ovaj folder (`data/`). Provjeri licenciranje skupa na stranici portala prije ponovne upotrebe.
+File used in the thesis: `nez-opendata-2025-20260125.xlsx` (33,415 rows, 9 columns, no header row).
+Put it in this folder (`data/`). Check the licence of the dataset on the portal page before reuse.

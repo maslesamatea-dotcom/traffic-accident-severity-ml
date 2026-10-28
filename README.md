@@ -1,61 +1,63 @@
-# Predviđanje ozbiljnosti saobraćajnih nezgoda metodama mašinskog učenja
+# Predicting Traffic Accident Severity with Machine Learning
 
-- **Završni rad:** *Primjena metoda mašinskog učenja za predviđanje ozbiljnosti saobraćajnih nezgoda*
-- **Autor:** Matea Masleša, Visoka škola strukovnih studija za informacione tehnologije (ITS), Beograd, 2026.
-- **Mentor:** dr Đorđe Petrović
+**Language:** English | [Srpski](README.sr.md)
 
-## Cilj
+- **Thesis:** *Application of Machine Learning Methods for Predicting the Severity of Traffic Accidents* (original title in Serbian: *Primjena metoda mašinskog učenja za predviđanje ozbiljnosti saobraćajnih nezgoda*)
+- **Author:** Matea Masleša, Information Technology School (ITS), Belgrade, 2026
+- **Supervisor:** Dr Đorđe Petrović
 
-Na osnovu okolnosti saobraćajne nezgode (mjesto, vrijeme, tip i opis nezgode) predviđa se njena **posljedica** u tri klase: materijalna šteta, povrijeđeni i poginuli. Rad poredi četiri modela i posebno se bavi izrazitom neuravnoteženošću klasa.
+## Goal
 
-## Podaci
+Based on the circumstances of a traffic accident (place, time, type and description of the accident), predict its **outcome** in three classes: material damage, injured and fatal. The thesis compares four models and focuses on severe class imbalance.
 
-- **Izvor:** MUP Republike Srbije, *Podaci o saobraćajnim nezgodama po policijskim upravama i opštinama za 2025. godinu*, Portal otvorenih podataka ([link](https://data.gov.rs/sr/datasets/podatsi-o-saobratshajnim-nezgodama-po-politsijskim-upravama-i-opshtinama/)).
-- **Veličina:** 33.415 nezgoda iz 2025. godine, 9 originalnih kolona.
-- **Podaci nisu u repozitoriju.** Uputstvo je u `data/README.md`.
-- **Raspodjela klasa:** materijalna šteta oko 59%, povrijeđeni oko 39%, **poginuli samo 1,4% (463 nezgode)**.
+## Data
 
-## Metodologija
+- **Source:** Ministry of Interior of the Republic of Serbia, *Data on traffic accidents by police departments and municipalities for 2025*, open data portal ([link](https://data.gov.rs/sr/datasets/podatsi-o-saobratshajnim-nezgodama-po-politsijskim-upravama-i-opshtinama/)).
+- **Size:** 33,415 accidents from 2025, 9 original columns.
+- **The data are not in the repository.** Instructions are in `data/README.md`.
+- **Class distribution:** material damage about 59%, injured about 39%, **fatal only 1.4% (463 accidents)**.
 
-1. **Eksplorativna analiza:** raspodjela po policijskim upravama i opštinama, tipovima nezgoda, mjesecima, satima i danima u sedmici (grafici u `results/`).
-2. **Atributi (11):** kategorijski: policijska uprava, opština, tip nezgode, opis nezgode, dan u sedmici. Numerički: geografska dužina i širina, te mjesec i sat kodirani ciklično (sin/cos).
-3. **Podjela podataka:** 80/20, stratifikovano (`random_state=42`): 26.732 za trening, 6.683 za test (92 nezgode sa poginulima). Podjela se radi **prije** enkodiranja i balansiranja, da test skup ne bi bio "zagađen".
-4. **Neuravnoteženost klasa:** SMOTENC (samo na trening skupu; poginuli sa 371 na 15.855 primjera) uz težine klasa u modelima.
-5. **Modeli:** Logistička regresija, Decision Tree, Random Forest i CatBoost.
-6. **Evaluacija:** accuracy, weighted i macro F1, te preciznost, odziv i F1 za klasu "poginuli". Dodatno 5-struka stratifikovana unakrsna validacija za Random Forest (SMOTENC unutar pipeline-a).
-7. **Provjera curenja informacija:** provjereno je da opis nezgode ne sadrži izravno riječ "pogin" za klasu poginulih (0,00%).
+## Methodology
 
-## Rezultati (test skup, 6.683 nezgode)
+1. **Exploratory analysis:** distribution by police department and municipality, accident type, month, hour and weekday (figures in `results/`).
+2. **Features (11):** categorical: police department, municipality, accident type, accident description, weekday. Numerical: longitude and latitude, plus month and hour encoded cyclically (sin/cos).
+3. **Data split:** 80/20, stratified (`random_state=42`): 26,732 for training, 6,683 for testing (92 fatal accidents). The split is done **before** encoding and resampling so that the test set stays untouched.
+4. **Class imbalance:** SMOTENC (training set only; fatal class from 371 to 15,855 samples) together with class weights in the models.
+5. **Models:** Logistic Regression, Decision Tree, Random Forest and CatBoost.
+6. **Evaluation:** accuracy, weighted and macro F1, plus precision, recall and F1 for the fatal class. Additionally, 5-fold stratified cross-validation for Random Forest (SMOTENC inside the pipeline).
+7. **Leakage check:** the accident description was checked and does not directly contain the word for "fatal" for the fatal class (0.00%).
 
-| Model | Accuracy | Weighted F1 | Macro F1 | Preciznost (poginuli) | Odziv (poginuli) |
+## Results (test set, 6,683 accidents)
+
+| Model | Accuracy | Weighted F1 | Macro F1 | Precision (fatal) | Recall (fatal) |
 |---|---|---|---|---|---|
-| Logistička regresija | 0,64 | 0,69 | 0,48 | 0,04 | **0,42** |
-| Decision Tree | 0,67 | 0,69 | 0,48 | 0,03 | 0,20 |
-| Random Forest | 0,73 | 0,73 | 0,51 | 0,06 | 0,11 |
-| **CatBoost** | **0,74** | **0,74** | **0,53** | 0,10 | 0,13 |
+| Logistic Regression | 0.64 | 0.69 | 0.48 | 0.04 | **0.42** |
+| Decision Tree | 0.67 | 0.69 | 0.48 | 0.03 | 0.20 |
+| Random Forest | 0.73 | 0.73 | 0.51 | 0.06 | 0.11 |
+| **CatBoost** | **0.74** | **0.74** | **0.53** | 0.10 | 0.13 |
 
-Tabela je u `results/rezultati_modela.csv`, a matrice konfuzije i poređenje modela u `results/` (`14`–`20`).
+The table is in `results/rezultati_modela.csv`; confusion matrices and the model comparison are in `results/` (`14`–`20`).
 
-**Glavni nalazi**
-- **CatBoost** ima najbolju ukupnu tačnost (0,74) i najbolji macro F1 (0,53).
-- **Logistička regresija** pronalazi najviše nezgoda sa poginulima (odziv 0,42), ali uz veoma malu preciznost (0,04), tj. većinu "upozorenja" čine lažni alarmi.
-- Unakrsna validacija Random Forest-a: weighted F1 0,734 ± 0,003, odziv za poginule 0,076 ± 0,011. Rezultati su stabilni, ali odziv za poginule ostaje nizak.
-- Izbor modela zavisi od cilja: za ukupnu tačnost CatBoost, a za hvatanje rijetkih teških nezgoda Logistička regresija, uz cijenu lažnih alarma.
+**Key findings**
+- **CatBoost** has the best overall accuracy (0.74) and the best macro F1 (0.53).
+- **Logistic Regression** finds the most fatal accidents (recall 0.42) but with very low precision (0.04), i.e. most of its "alerts" are false alarms.
+- Random Forest cross-validation: weighted F1 0.734 ± 0.003, recall for fatal accidents 0.076 ± 0.011. Results are stable, but recall for the fatal class stays low.
+- The choice of model depends on the goal: CatBoost for overall accuracy, Logistic Regression for catching rare severe accidents, at the cost of false alarms.
 
-## Ograničenja
+## Limitations
 
-- **Klasa "poginuli" se i dalje loše predviđa.** Preciznost je 0,03–0,10 i odziv 0,11–0,42, pa model nije pogodan za samostalno upozoravanje.
-- Atributi opisuju samu nezgodu (uključujući njen opis), pa model **procjenjuje ozbiljnost iz okolnosti nezgode**, a ne predviđa je unaprijed.
-- Random Forest je prilagođen trening podacima (tačnost na treningu 0,92, na testu 0,73).
-- Samo jedna godina podataka i jedna nasumična stratifikovana podjela. Test skup ima samo 92 nezgode sa poginulima, pa su procjene za tu klasu nesigurne.
-- Hiperparametri nisu sistematski optimizovani.
+- **The fatal class is still predicted poorly.** Precision is 0.03–0.10 and recall 0.11–0.42, so the model is not suitable for stand-alone warnings.
+- The features describe the accident itself (including its description), so the model **estimates severity from the circumstances of the accident**; it does not predict it in advance.
+- Random Forest overfits the training data (training accuracy 0.92, test 0.73).
+- Only one year of data and one random stratified split. The test set has just 92 fatal accidents, so estimates for that class are uncertain.
+- Hyperparameters were not systematically tuned.
 
-## Struktura i pokretanje
+## Structure and usage
 
 ```
-data/        uputstvo za preuzimanje podataka
-notebooks/   Diplomski_kod.ipynb (kod sa sačuvanim rezultatima)
-results/     grafici i tabela rezultata
+data/        instructions for downloading the data
+notebooks/   Diplomski_kod.ipynb (code with saved outputs)
+results/     figures and results table
 ```
 
 ```bash
@@ -63,4 +65,4 @@ pip install -r requirements.txt
 jupyter notebook notebooks/Diplomski_kod.ipynb
 ```
 
-Prije pokretanja preuzmi podatke u folder `data/` (vidi `data/README.md`).
+Download the data into the `data/` folder before running (see `data/README.md`). The notebook comments are in Serbian.
