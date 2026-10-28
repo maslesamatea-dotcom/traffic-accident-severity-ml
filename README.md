@@ -1,8 +1,8 @@
 # Predviđanje ozbiljnosti saobraćajnih nezgoda metodama mašinskog učenja
 
-Završni rad: *Primjena metoda mašinskog učenja za predviđanje ozbiljnosti saobraćajnih nezgoda*
-Autor: Matea Masleša, Visoka škola strukovnih studija za informacione tehnologije (ITS), Beograd, 2026.
-Mentor: dr Đorđe Petrović
+- **Završni rad:** *Primjena metoda mašinskog učenja za predviđanje ozbiljnosti saobraćajnih nezgoda*
+- **Autor:** Matea Masleša, Visoka škola strukovnih studija za informacione tehnologije (ITS), Beograd, 2026.
+- **Mentor:** dr Đorđe Petrović
 
 ## Cilj
 
